@@ -43,8 +43,8 @@ function seedDB(){
                             if(err){
                                 console.log(err);
                             } else {
-                                campground.comments.push(comment);
-                                campground.save();
+                                Pocket.comments.push(comment);
+                                Pocket.save();
                                 console.log("Created new comment");
                             }
                         });
