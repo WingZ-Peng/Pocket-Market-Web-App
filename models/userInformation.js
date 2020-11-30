@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema( {
     isAdmin: { type: Boolean, default: false}
 });
 
-UserSchema.plugin(localPassportMongoose);
+userSchema.plugin(localPassportMongoose);
 const UserInformation = mongoose.model('UserInformation', userSchema);
 
 export default UserInformation;

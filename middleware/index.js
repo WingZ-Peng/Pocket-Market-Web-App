@@ -1,6 +1,7 @@
-var Comment = require('../models/comment');
-var PocketMarket = require('../models/pocketMarket');
-var middlewareObj = {};
+import Comment from '../models/comment.js';
+import PocketMarket from '../models/pocketMarket.js';
+
+const middlewareObj = {};
 
 middlewareObj.isLoggedIn = function (req, res, next) {
   if (req.isAuthenticated()) {
@@ -8,7 +9,7 @@ middlewareObj.isLoggedIn = function (req, res, next) {
 }
 req.flash("error","Please login first!");
 res.redirect("/login");
-}
+};
 
 middlewareObj.isAdmin = function (req, res, next) {
   if(req.user.isAdmin) {
@@ -17,7 +18,7 @@ middlewareObj.isAdmin = function (req, res, next) {
     req.flash('error', 'Please login to make action!')
     res.redirect('Go back');
   }
-},
+};
 
 middlewareObj.checkAccountOwnership = function (req, res, next){
   if (req.isAuthenticated()) {
@@ -34,7 +35,7 @@ middlewareObj.checkAccountOwnership = function (req, res, next){
           res.redirect("Go back");
         }
       });
-    }},
+    }};
 
 middlewareObj.checkCommentOwnership = function (req, res, next){
   if (req.isAuthenticated()) {
@@ -51,6 +52,6 @@ middlewareObj.checkCommentOwnership = function (req, res, next){
              res.redirect("Go back");
          }
       });
-    }},
+    }};
 
-module.exports = middlewareObj;
+export default middlewareObj;

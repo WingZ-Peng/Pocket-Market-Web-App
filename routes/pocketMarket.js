@@ -1,8 +1,7 @@
 import express from 'express';
-import PocketMarket from '../models/pocketMarket';
-import Comment from '../models/comment';
-import middleware from '../middleware';
-import {isLoggedIn, checkAccountOwnership, checkCommentOwnership, isAdmin} from 'middelware';
+import PocketMarket from '../models/pocketMarket.js';
+import Comment from '../models/comment.js';
+import middlewareObj from "../middleware/index.js";
 import multer from 'multer';
 import cloudinary from 'cloudinary';
 
@@ -56,7 +55,7 @@ router.get("/", function(req, res){
     api_secret: process.env.apiSecret
   });
 
-  router.post("/", isLoggedIn, upload.single('image'), function(req, res) {
+  router.post("/", middlewareObj.isLoggedIn, upload.single('image'), function(req, res) {
     console.log(req.body);
     cloudinary.uploader.upload(req.file.path, function(result) {
       req.body.PocketMarket.image = result.secure_url;
@@ -75,7 +74,7 @@ router.get("/", function(req, res){
     });
 });
 
-router.get("/new", isLoggedIn, function(req, res) {
+router.get("/new", middlewareObj.isLoggedIn, function(req, res) {
     res.render("pocketMarkets/new");
 });
 
@@ -91,7 +90,7 @@ router.get("/:id", function(req, res) {
     });
 });
 
-router.get("/:id/edit", checkAccountOwnership, function(req, res) {
+router.get("/:id/edit", middlewareObj.checkAccountOwnership, function(req, res) {
     PocketMarket.findById(req.params.id, function(err, foundPocketMarket ) {
         if (err || !foundPocketMarket) {
              req.flash("error","You don't own this post");
@@ -103,7 +102,7 @@ router.get("/:id/edit", checkAccountOwnership, function(req, res) {
     });
 });
 
-router.put("/:id", checkaAccountOwnership, upload.single('image'), function(req, res) {
+router.put("/:id", middlewareObj.checkaAccountOwnership, upload.single('image'), function(req, res) {
     if(req.file){
         cloudinary.uploader.upload(req.file.path, function(result) {
           req.body.PocketMarket.image = result.secure_url;

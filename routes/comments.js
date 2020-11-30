@@ -1,12 +1,13 @@
 import express from 'express';
 import Comment from '../models/comment.js';
-import middleware from '../middleware/index.js';
 import PockmetMarket from '../models/pocketMarket.js';
+import middlewareObj from "../middleware/index.js";
 
 const router = express.Router();
 
+
 //get new comment
-router.get("/new", isLoggedIn, function(req, res) {
+router.get("/new", middlewareObj.isLoggedIn, function(req, res) {
     PockmetMarket.findById(req.param.id, function(err, pocketMarket){
         if (err){
             console.log(err);
@@ -17,7 +18,7 @@ router.get("/new", isLoggedIn, function(req, res) {
 });
 
 //create comments
-router.post("/", middleware.isLoggedIn, function(req, res) {
+router.post("/", middlewareObj.isLoggedIn, function(req, res) {
     PockmetMarket.findById(req.params.id, function(err, foundpocketMarket) {
         if (err || !foundpocketMarket) {
             req.flash("error","Please try it again!");
@@ -46,7 +47,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 });
 
 //edit comments
-router.get("/:comment_id/edit", middleware.checkCommentOwnership, function (req, res) {
+router.get("/:comment_id/edit", middlewareObj.checkCommentOwnership, function (req, res) {
     PockmetMarket.findById(req.params.id, function(err, foundpocketMarket) {
         if(err || !foundpocketMarket){
             req.flash("error", "Please try it later!")
@@ -64,7 +65,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function (req,
 });
 
 //delete comments
-router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.delete("/:comment_id", middlewareObj.checkCommentOwnership, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err) {
         if (err) {
             req.flash("error","Please try it later!");
@@ -77,4 +78,4 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, re
     });
 });
 
-module.exports = router;
+export default router;
