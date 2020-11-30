@@ -1,0 +1,28 @@
+<% include partials/header %>
+
+<div class="container">
+    <header class="jumbotron" id="mainHeader">
+        <div class="container" >
+            <h1>Welcome To Pocket Market!</h1>
+            <p>View all supermarkets nearby you!</p>
+            <p>
+             <a  class="btn btn-primary btn-lg" href="views/market/new">Add a new post</a>   
+            </p>
+        </div>
+    </header>
+    
+        <div class="row" style="display:flex; flex-wrap: wrap">
+            <% PocketMarket.forEach(function(pocketMarket){%>
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                         <img src="<%= pocketMarket.image %>">
+                         <div class="caption">
+                            <h4><%= pocketMarket.name %></h4>
+                         </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+</div>
+
+<% include partials/footer %>
