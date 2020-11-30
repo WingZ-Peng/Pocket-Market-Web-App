@@ -23,7 +23,8 @@ router.get("/register", function(req, res) {
 router.post('/user/register', function (req, res, next) {
 
     // console.log(req.body);
-    var newUser = new UserInformation ({username: req.body.username, 
+    var newUser = new UserInformation ({
+                            username: req.body.username, 
                             firstname: req.body.firstname,
                             lastname: req.body.lastname,
                             email: req.body.email,
@@ -65,24 +66,23 @@ router.get("/logout", function(req, res){
 });
 
 //User Profile
-/*router.get("/users/:id", function(req, res) {
+router.get("/users/:id", function(req, res) {
   UserInformation.findById(req.params.id, function(err, foundUser){
      if(err){
-         req.flash("error", "Please try it angin");
-         res.redirect("/s");
+         req.flash("error", "Please try it angin!");
+         res.redirect("/PocketMarket");
      } else {
          Pock.find().where('author.id').equals(foundUser._id).exec(function(err, foodFound){
              if(err) {
                  req.flash("error", "Something went wrong...");
-                 res.redirect("/s");
+                 res.redirect("/PocketMarket");
              } else {
-                 res.render("users/show", {user: foundUser, s: foodFound});
+                 res.render("users/show", {user: foundUser, PocketMarket: foodFound});
              }
          })
      }
   }); 
 });
-*/
 
 module.exports = router;
 

@@ -22,6 +22,6 @@ const pocketMarketSchema = new mongoose.Schema({
     ] 
 });
 
-var PocketMarket = mongoose.model('PocketMarkrt', pocketMarketSchema);
+const PocketMarket = mongoose.model('PocketMarkrt', pocketMarketSchema);
 
 export default PocketMarket;
