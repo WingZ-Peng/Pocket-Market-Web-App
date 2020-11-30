@@ -13,6 +13,6 @@ const commentSchema = mongoose.Schema( {
     }
 });
 
-const UserComment = mongoose.model("UserComment", commentSchema);
+var Comment = mongoose.model("Comment", commentSchema);
 
-export default UserComment;
+export default Comment;
