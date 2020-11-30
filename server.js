@@ -1,14 +1,18 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import seedDB from './seed.js';
 import cors from 'cors';
-import postRoutes from './routes/post.js';
-import usersControllers from './controllers/users.js';
-import userRouters from './routes/user.js';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import localPassport from 'passport-local';
 import flash from 'connect-flash';
+import PocketMarket from './models/pocketMarket.js';
+import Comment from './models/comment.js';
+import UserInformation from './models/userInformation.js';
+import commentRoutes from './routes/comments.js';
+import pocketMarketRoutes from './routes/pockectMarket.js';
+import userRouters from './routes/user.js';
 
 const app = express();
 dotenv.config();

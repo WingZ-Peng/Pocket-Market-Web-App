@@ -4,8 +4,6 @@ const pocketMarketSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
-    cost: Number,
-    location: String,
     createdAt: { type: Date, default: Date.now },
     author: {
        id: {

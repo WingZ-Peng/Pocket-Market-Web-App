@@ -1,50 +1,48 @@
-var mongoose = require("mongoose");
-var Pocket = require("./models/pocketMarket");
-var Comment   = require("./models/comment");
+// To text if the comment function adding later will work well
 
-var data = [
+import mongoose from 'mongoose';
+import pocketMarket from './models/pocketMarket';
+import Comment from './models/comment';
+
+var data =[
     {
-        name: "Cloud's Rest", 
-        image: "https://farm4.staticflickr.com/3795/10131087094_c1c0a1c859.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+        name: "Apple",
+        image:"https://i2.wp.com/ceklog.kindel.com/wp-content/uploads/2013/02/firefox_2018-07-10_07-50-11.png",
+        description:"It's meant to be eaten, not used play! "
     },
     {
-        name: "Desert Mesa", 
-        image: "https://farm6.staticflickr.com/5487/11519019346_f66401b6c1.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+        name: "Banana",
+        image:"https://time.com/5730790/banana-panama-disease/",
+        description:"What We Can Learn From the Near-Death of the Banana!"
     },
     {
-        name: "Canyon Floor", 
-        image: "https://farm1.staticflickr.com/189/493046463_841a18169e.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+        name: "Coke",
+        image:"https://www.ajc.com/news/local/coke-widened-its-lead-versus-pepsi-cola-wars-last-year-report-says/xB7lMbJZORpRh1muuS1aqL",
+        description:"Healthy or not?"
     }
-]
+    ]
 
+//Preform to remove all PocketMarket
 function seedDB(){
-   //Remove all campgrounds
-   Pocket.remove({}, function(err){
-        if(err){
-            console.log(err);
+   pocketMarket.remove({}, function(err){
+        if(!err){
+            console.log("removed PocketMarket!");
         }
-        console.log("removed market!");
-         //add a few campgrounds
+
+         //add few new datas about PocketMarket
         data.forEach(function(seed){
-            Pocket.create(seed, function(err, campground){
-                if(err){
-                    console.log(err)
-                } else {
+            pocketMarket.create(seed, function(err, pocketMarket){
+                if(!err){
                     console.log("added a market");
-                    //create a comment
+                    //create new comment
                     Comment.create(
                         {
-                            text: "This place is great, but I wish there was internet",
+                            text: "Please join internet world!",
                             author: "Homer"
                         }, function(err, comment){
-                            if(err){
-                                console.log(err);
-                            } else {
-                                Pocket.comments.push(comment);
-                                Pocket.save();
+                            if(!err){
+                                pocketMarket.comments.push(comment);
+                                pocketMarket.save();
                                 console.log("Created new comment");
                             }
                         });
@@ -52,7 +50,6 @@ function seedDB(){
             });
         });
     }); 
-    //add a few comments
 }
 
 module.exports = seedDB;
