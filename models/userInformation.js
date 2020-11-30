@@ -4,7 +4,6 @@ import localPassportMongoose from 'passport-local-mongoose';
 const userSchema = new mongoose.Schema( {
     username: String,
     password: String,
-    avatar: String,
     firstname: String,
     lastname: String,
     email: String,
@@ -12,6 +11,6 @@ const userSchema = new mongoose.Schema( {
 });
 
 UserSchema.plugin(localPassportMongoose);
-var UserInformation = mongoose.model('UserInformation', userSchema);
+const UserInformation = mongoose.model('UserInformation', userSchema);
 
 export default UserInformation;
