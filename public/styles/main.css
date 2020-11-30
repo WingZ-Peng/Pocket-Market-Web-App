@@ -1,0 +1,53 @@
+.searchBar {
+    margin-top: 8px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.thumbnail {
+    padding: 60px;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
+
+.delete-form{
+    display: inline;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+  
+body {
+    margin-bottom: 60px;
+    background-color: #AFEEEE;
+}
+  
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #4682b4;
+}
+  
+.footer .container {
+      margin-top: 15px;
+}
+  
+.jumbotron {
+      background-image: url("https://i.imgur.com/ERHBuXb.png"); 
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: #556B2F;
+}
