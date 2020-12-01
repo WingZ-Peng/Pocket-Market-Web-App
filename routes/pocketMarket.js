@@ -29,21 +29,21 @@ function escapeRegex(text) {
 router.get("/", function(req, res){
     if(req.query.search && req.xhr) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        PocketMarket.find({name: regex}, function(err, allPocketMarkets){
+        PocketMarket.find({name: regex}, function(err, allPocketMarket){
            if(err){
               console.log(err);
            } else {
-              res.render("PocketMarket/index", { pocketMarkets: allPocketMarkets });
+              res.render("PocketMarket/index", { pocketMarket: allPocketMarket });
            }
         });
     } else {
-        PocketMarket.find({}, function(err, allPocketMarkets){
+        PocketMarket.find({}, function(err, allPocketMarket){
            if(err){
                console.log(err);
            } else if(req.xhr) {
-                res.json(allPocketMarkets);
+                res.json(allPocketMarket);
             } else {
-                res.render("PocketMarket/index",{ pocketMarkets: allPocketMarkets});
+                res.render("PocketMarket/index",{ pocketMarket: allPocketMarket});
               }
         });
     }

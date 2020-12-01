@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 col-sm-12">
-            <p class="lead">J Food Blogger</p>
+            <p class="lead">Pocket Market</p>
             <div class="list-group">
                 <li class="list-group-item" ><a href="/PocketMarket/new">Create new post</a></li>
                 <li class="list-group-item" ><a href="#commentSection">See comments</a></li>
@@ -19,7 +19,7 @@
                    <p>
                        <em>Submitted By <a href="/users/<%= pocketMarket.author.id %>"><%= pocketMarket.author.username %></a></em>
                    </p>
-                   <% if (currentUser && pocketMarket.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                   <% if (currentUser && pocketMarket.author.id.equals(currentUser._id)){ %>
                    <a class="btn btn-warning" href="/PocketMarket/<%= pocketMarket._id %>/edit"> Edit </a>
                    <form class="delete-form" action="/PocketMarket/<%= pocketMarket._id %>?_method=DELETE" method="POST" >
                        <button  class="btn btn-danger">Delete</button>
@@ -40,7 +40,7 @@
                         <p>
                           <%= comment.text %>
                         </p>
-                    <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                    <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
                         <a class="btn btn-xs btn-warning" href="/PocketMarket/<%=pocketMarket._id%>/comments/<%=comment._id%>/edit">Edit 
                         </a>
                         <form class="delete-form" action="/PocketMarket/<%=pocketMarket._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">

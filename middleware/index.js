@@ -6,18 +6,10 @@ const middlewareObj = {};
 middlewareObj.isLoggedIn = function (req, res, next) {
   if (req.isAuthenticated()) {  
    return next();
-  }req.flash("error","Please login first!");
-   res.redirect("/login");
-};
-
-middlewareObj.isAdmin = function (req, res, next) {
-  if(req.user.isAdmin) {
-    next();
   }else{
-    req.flash('error', 'Please login to make action!')
-    res.redirect('Go back');
-  }
-};
+    req.flash("error","Please login first!");
+    res.redirect("/login");
+}};
 
 middlewareObj.checkAccountOwnership = function (req, res, next){
   if (req.isAuthenticated()) {
@@ -26,7 +18,7 @@ middlewareObj.checkAccountOwnership = function (req, res, next){
           console.log(err);
           req.flash('error', 'Post do not exit!');
           res.redirect('/pocketMarket');
-      } else if(foundPocketMarket.author.id.equals(req.user._id) || req.user.isAdmin){
+      } else if(foundPocketMarket.author.id.equals(req.user._id)){
         req.pocketMarket = foundPocketMarket;
         next();
       } else {
@@ -42,8 +34,8 @@ middlewareObj.checkCommentOwnership = function (req, res, next){
          if(err || !foundComment){
              console.log(err);
              req.flash('error', 'Comment do not exist!');
-             res.redirect('/pocketMarket');
-         } else if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
+             res.redirect('/Go back');
+         } else if(foundComment.author.id.equals(req.user._id)){
               req.comment = foundComment;
               next();
          } else {
