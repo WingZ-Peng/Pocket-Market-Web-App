@@ -1,7 +1,8 @@
 import express from 'express';
-import PocketMarket from '../models/pocketMarket.js';
-import Comment from '../models/comment.js';
-import middlewareObj from "../middleware/index.js";
+import PocketMarket from '../models/pocketMarket';
+import Comment from '../models/comment';
+import middleware from '../middleware';
+import {isLoggedIn, checkAccountOwnership, checkCommentOwnership, isAdmin} from 'middelware';
 import multer from 'multer';
 import cloudinary from 'cloudinary';
 
@@ -33,7 +34,7 @@ router.get("/", function(req, res){
            if(err){
               console.log(err);
            } else {
-              res.render("PocketMarket/index", { pocketMarkets: allPocketMarkets });
+              res.status(200).json(allPocketMarkets);
            }
         });
     } else {
@@ -43,7 +44,7 @@ router.get("/", function(req, res){
            } else if(req.xhr) {
                 res.json(allPocketMarkets);
             } else {
-                res.render("PocketMarket/index",{ pocketMarkets: allPocketMarkets});
+                res.render("pocketMarkets/index",{pocketMarkets: allPocketMarkets});
               }
         });
     }
@@ -55,7 +56,7 @@ router.get("/", function(req, res){
     api_secret: process.env.apiSecret
   });
 
-  router.post("/", middlewareObj.isLoggedIn, upload.single('image'), function(req, res) {
+  router.post("/", isLoggedIn, upload.single('image'), function(req, res) {
     console.log(req.body);
     cloudinary.uploader.upload(req.file.path, function(result) {
       req.body.PocketMarket.image = result.secure_url;
@@ -67,53 +68,53 @@ router.get("/", function(req, res){
       PocketMarket.create(req.body.PocketMarket, function(err, PocketMarket) {
         if (err || !PocketMarket) {
           req.flash('error', err.message);
-          return res.redirect('/PocketMarket');
+          return res.redirect('/pocketMarkets');
         }
-        res.redirect('/PocketMarket/' + PocketMarket.id);
+        res.redirect('/pocketMarkets/' + PocketMarket.id);
       });
     });
 });
 
-router.get("/new", middlewareObj.isLoggedIn, function(req, res) {
-    res.render("PocketMarket/new");
+router.get("/new", isLoggedIn, function(req, res) {
+    res.render("pocketMarkets/new");
 });
 
 router.get("/:id", function(req, res) {
     PocketMarket.findById(req.params.id).populate("comments").exec(function(err, foundPocketMarket) {
         if (err || !foundPocketMarket) {
             req.flash("error","The pocket market doesn't exit.");
-            res.redirect("/PocketMarket");
+            res.redirect("/pocketMarkets");
         }
         else {
-            res.render("PocketMarket/show", { pocketMarket : foundPocketMarket });
+            res.render("pocketMarkets/show", { pocketMarket : foundPocketMarket });
         }
     });
 });
 
-router.get("/:id/edit", middlewareObj.checkAccountOwnership, function(req, res) {
+router.get("/:id/edit", checkAccountOwnership, function(req, res) {
     PocketMarket.findById(req.params.id, function(err, foundPocketMarket ) {
         if (err || !foundPocketMarket) {
              req.flash("error","You don't own this post");
-             res.redirect("/PocketMarket");
+             res.redirect("/pocketMarkets");
         } 
         else {
-            res.render("PocketMarket/edit",  { pocketMarket: foundPocketMarket }); 
+            res.render("pocketMarkets/edit",  { pocketMarket: foundPocketMarket }); 
         }
     });
 });
 
-router.put("/:id", middlewareObj.checkAccountOwnership, upload.single('image'), function(req, res) {
+router.put("/:id", checkaAccountOwnership, upload.single('image'), function(req, res) {
     if(req.file){
         cloudinary.uploader.upload(req.file.path, function(result) {
           req.body.PocketMarket.image = result.secure_url;
           req.body.PocketMarket.body = req.sanitize(req.body.PocketMarket.body);
           PocketMarket.findByIdAndUpdate(req.params.id, req.body.PocketMarket, function(err, updatedPocketMarket) {
                 if (err || !updatedPocketMarket) {
-                    res.redirect("/PocketMarket");
+                    res.redirect("/pocketMarkets");
                 }
                 else {
                     req.flash("success","Successfully updated!");
-                    res.redirect("/PocketMarket/" + req.params.id);
+                    res.redirect("/pocketMarkets/" + req.params.id);
                 }
             });
         });
@@ -122,26 +123,26 @@ router.put("/:id", middlewareObj.checkAccountOwnership, upload.single('image'), 
         req.body.PocketMarket.body = req.sanitize(req.body.PocketMarket.body);
         PocketMarket.findByIdAndUpdate(req.params.id, req.body.PocketMarket, function(err, updatedPocketMarket) {
             if (err || !updatedPocketMarket) {
-                res.redirect("/PocketMarket");
+                res.redirect("/pocketMarkets");
             }
             else {
                 req.flash("success","Successfully updated!");
-                res.redirect("/PocketMarket/" + req.params.id);
+                res.redirect("/pocketMarkets/" + req.params.id);
     
             }
         });
     }
 });
 
-router.delete("/:id", middlewareObj.checkAccountOwnership, function(req, res) {
+router.delete("/:id", checkAccountOwnership, function(req, res) {
     PocketMarket.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
-            res.redirect("/PocketMarket");
+            res.redirect("/pocketMarkets");
 
         }
         else {
             req.flash("success","Successfully deleted.");
-            res.redirect("/PocketMarket");
+            res.redirect("/pocketMarkets");
         }
     });
 });
