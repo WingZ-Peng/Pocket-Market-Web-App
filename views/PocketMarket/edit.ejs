@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<%- include ('../partials/header.ejs') %>
 <div class="container">
     <div class="row">
         <div col-lg-12 col-md-12 col-sm-12>
@@ -18,7 +18,7 @@
                         <input class="form-control" type="text" name="pocketMarket[description]" value="<%= pocketMarket.description%>">
                     </div>
                     <div class="form-group"> 
-                        <label for="pocketMarket[price">Price</label>
+                        <label for="pocketMarket[price]">Price</label>
                         <input class="form-control" type="number" name="pocketMarket[price]" value="<%= pocketMarket.price%>">
                     </div>
                     <div class="form-group"> 
@@ -31,4 +31,4 @@
     </div>
 </div>
 
-<% include ../partials/footer %>
+<%- include ('../partials/footer.ejs') %>
