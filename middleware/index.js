@@ -4,11 +4,10 @@ import PocketMarket from '../models/pocketMarket.js';
 const middlewareObj = {};
 
 middlewareObj.isLoggedIn = function (req, res, next) {
-  if (req.isAuthenticated()) {
-  return next();
-}
-req.flash("error","Please login first!");
-res.redirect("/login");
+  if (req.isAuthenticated()) {  
+   return next();
+  }req.flash("error","Please login first!");
+   res.redirect("/login");
 };
 
 middlewareObj.isAdmin = function (req, res, next) {

@@ -6,8 +6,10 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import localPassport from 'passport-local';
 import flash from 'connect-flash';
+import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import expressSanitizer from 'express-sanitizer';
+import session from "express-session";
 import PocketMarket from './models/pocketMarket.js';
 import Comment from './models/comment.js';
 import UserInformation from './models/userInformation.js';
@@ -21,21 +23,21 @@ app.set("view engine", "ejs");
 
 app.use(cors());
 app.use(flash());
-app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new localPassport(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.use(cookieParser('Pocket Market'));
+passport.use(new localPassport(UserInformation.authenticate()));
+passport.serializeUser(UserInformation.serializeUser());
+passport.deserializeUser(UserInformation.deserializeUser());
 
 //Passport configuration
-app.use(require("express-session")({
+app.use(session({
     secret:"Pocket Market",
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
 }));
 
 app.use(function(req, res, next){
@@ -45,7 +47,7 @@ app.use(function(req, res, next){
     next();
  });
 
-app.use(userRouters);
+app.use("/", userRouters);
 app.use('/pocketMarket', pocketMarketRoutes); 
 app.use('/pocketMarket/:id/comments', commentRoutes);
 
@@ -54,4 +56,3 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
     .then(() => app.listen(PORT, () => console.log('Server running on port: ${PORT}')))
     .catch((error) => console. log(error.message));  
 
-mongoose.set('useFindAndModify', false);
