@@ -1,6 +1,7 @@
 # Pocket Market WebApp
 
-! [Image of Packmet Market](https://i.imgur.com/ERHBuXb.png)
+![Image of Packmet Market]
+(https://i.imgur.com/ERHBuXb.png)
 
 ### INTRODUCTION:
 * The goal of Pocket Market is to build a community of sharing. When facing the choice of goods in life, Pocket Market provides customers with the sharing of their shopping experience and conveys the happiness of sharing. APP architecture is based on Node. js, Express is adopted as the development framework, Mongoose is database and NPM packages. Pocket Market allows users to have their own account, share their shopping experience and comment on others' share.
