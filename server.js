@@ -16,6 +16,7 @@ import UserInformation from './models/userInformation.js';
 import userRouters from './routes/user.js';
 import commentRoutes from "./routes/comments.js";
 import pocketMarketRoutes from "./routes/pocketMarket.js";
+import.meta.url
 
 const app = express();
 dotenv.config();
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser('Pocket Market'));
+app.use(express.static(process.cwd()+ "/public"));
 passport.use(new localPassport(UserInformation.authenticate()));
 passport.serializeUser(UserInformation.serializeUser());
 passport.deserializeUser(UserInformation.deserializeUser());
@@ -55,6 +57,5 @@ const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(PORT, () => console.log('Server running on port: ${PORT}')))
     .catch((error) => console. log(error.message));  
-
 
 
