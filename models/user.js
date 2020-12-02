@@ -10,6 +10,6 @@ const UserSchema = new mongoose.Schema( {
 });
 
 UserSchema.plugin(localPassportMongoose);
-const UserInformation = mongoose.model('UserInformation', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
-export default UserInformation;
+export default User;

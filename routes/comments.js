@@ -1,24 +1,27 @@
 import express from 'express';
 import Comment from '../models/comment.js';
-import PockmetMarket from '../models/pocketMarket.js';
+import pocketMarket from '../models/pocketMarket.js';
 import middlewareObj from "../middleware/index.js";
 import moment from "moment";
 
 const router = express.Router({ mergeParams: true });
-
+const { isLoggedIn, checkCommentOwnership} = middlewareObj;
 
 //get new comment
-router.get("/new", middlewareObj.isLoggedIn, function(req, res) {
-    PockmetMarket.findById(req.param.id, function(err, pocketMarket){
-        if (!err){
-             res.render("comments/new", {pocketMarket: pocketMarket });
+router.get("/new", isLoggedIn, function(req, res) {
+    pocketMarket.findById(req.param.id, function(err, pocketMarket){
+        if (err || !pocketMarket){
+            req.flash("error", "Please try it later");
+            return res.redirect("/PocketMarket");
+        }else {
+            res.render("comments/new", {pocketMarket: pocketMarket });
         }
     });
 });
 
 //create comments
-router.post("/", middlewareObj.isLoggedIn, function(req, res) {
-    PockmetMarket.findById(req.params.id, function(err, foundpocketMarket) {
+router.post("/", isLoggedIn, function(req, res) {
+    pocketMarket.findById(req.params.id, function(err, foundpocketMarket) {
         if (err || !foundpocketMarket) {
             req.flash("error","Please try it again!");
             return res.redirect("/PocketMarket");
@@ -33,8 +36,8 @@ router.post("/", middlewareObj.isLoggedIn, function(req, res) {
                     comment.author.username = req.user.username;
                     comment.author.dateAdded = moment(Date.now()).format("DD/MM/YYYY");
                     comment.save();
-                    foundj_food.comments.push(comment._id);
-                    foundj_food.save();
+                    foundpocketMarket.comments.push(comment._id);
+                    foundpocketMarket.save();
                     req.flash("success","Comment successfully added.");
                     res.redirect('/PocketMarket/' + foundpocketMarket._id);
                 }
@@ -44,9 +47,12 @@ router.post("/", middlewareObj.isLoggedIn, function(req, res) {
 });
 
 //update comments
-router.put("/:comment_id", middlewareObj.checkCommentOwnership, function(req, res){
+router.put("/:comment_id", function(req, res){
     Comment.findByIdAndUpdate(req.param.comment_id, req.body.comment, function(err, updateComment){
-        if (!err){
+        if (err) {
+            req.flash("error","Please try it later!");
+            res.redirect(" Go back");
+        } else{
             req.flash("success", "Comment successfully updated!")
             res.redirect("/PocketMarket" + req.params.id);
         }
@@ -54,8 +60,8 @@ router.put("/:comment_id", middlewareObj.checkCommentOwnership, function(req, re
 });
 
 //edit comments
-router.get("/:comment_id/edit", middlewareObj.checkCommentOwnership, function (req, res) {
-    PockmetMarket.findById(req.params.id, function(err, foundpocketMarket) {
+router.get("/:comment_id/edit", checkCommentOwnership, function (req, res) {
+    pocketMarket.findById(req.params.id, function(err, foundpocketMarket) {
         if(err || !foundpocketMarket){
             req.flash("error", "Please try it later!")
             return res.redirect("/PocketMarket");
@@ -71,7 +77,7 @@ router.get("/:comment_id/edit", middlewareObj.checkCommentOwnership, function (r
 });
 
 //delete comments
-router.delete("/:comment_id", middlewareObj.checkCommentOwnership, function(req, res){
+router.delete("/:comment_id", checkCommentOwnership, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err) {
         if (err) {
             req.flash("error","Please try it later!");

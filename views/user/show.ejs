@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="col-md-4">
-			<h1><%= user.firstName + " " + user.lastName %></h1>
+		<h1><%= user.firstName + " " + user.lastName %></h1>
 		<div class="thumbnail">
 				<div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
 		</div>
@@ -12,10 +12,9 @@
 		<% var count = 0 %>
 		<% PocketMarket.forEach(function(pocketMarket) { %>
 			<% count++ %>
-		<% }); %>
-		<% if(count != 0){ %>
+		<% }); 
+		%><% if(count != 0){ %>
 			<ul class="list-group">
-			
 			<% PocketMarket.forEach(function(pocketMarket) { %>
 				<li class="list-group-item"><a href="/PocketMarket/<%= pocketMarket.id %>"><%= pocketMarket.name %></a></li>
 			<% }); %>

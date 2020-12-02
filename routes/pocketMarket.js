@@ -1,11 +1,11 @@
 import express from 'express';
-import PocketMarket from '../models/pocketMarket.js';
+import pocketMarket from '../models/pocketMarket.js';
 import Comment from '../models/comment.js';
 import middlewareObj from "../middleware/index.js";
 import multer from 'multer';
 import cloudinary from 'cloudinary';
 
-var router = express.Router();
+const router = express.Router();
 
 var storage = multer.diskStorage({
   filename: function(req, file, callback) {
@@ -27,23 +27,21 @@ function escapeRegex(text) {
 };
 
 router.get("/", function(req, res){
-    if(req.query.search && req.xhr) {
+    if(req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        PocketMarket.find({name: regex}, function(err, allPocketMarkets){
+        pocketMarket.find({name: regex}, function(err, allPocketMarket){
            if(err){
               console.log(err);
            } else {
-              res.render("PocketMarket/index", { pocketMarkets: allPocketMarkets });
+              res.render("PocketMarket/index", { PocketMarket: allPocketMarket });
            }
         });
     } else {
-        PocketMarket.find({}, function(err, allPocketMarkets){
+        pocketMarket.find({}, function(err, allPocketMarket){
            if(err){
                console.log(err);
-           } else if(req.xhr) {
-                res.json(allPocketMarkets);
             } else {
-                res.render("PocketMarket/index",{ pocketMarkets: allPocketMarkets});
+                res.render("PocketMarket/index",{ PocketMarket: allPocketMarket});
               }
         });
     }
@@ -58,18 +56,18 @@ router.get("/", function(req, res){
   router.post("/", middlewareObj.isLoggedIn, upload.single('image'), function(req, res) {
     console.log(req.body);
     cloudinary.uploader.upload(req.file.path, function(result) {
-      req.body.PocketMarket.image = result.secure_url;
-      req.body.PocketMarket.author = {
-        id: req.userInformation._id,
-        username: req.userInformation.username
+      req.body.pocketMarket.image = result.secure_url;
+      req.body.pocketMarket.author = {
+        id: req.user._id,
+        username: req.user.username
       }
       
-      PocketMarket.create(req.body.PocketMarket, function(err, PocketMarket) {
-        if (err || !PocketMarket) {
+      pocketMarket.create(req.body.pocketMarket, function(err, pocketMarket) {
+        if (err || !pocketMarket) {
           req.flash('error', err.message);
           return res.redirect('/PocketMarket');
         }
-        res.redirect('/PocketMarket/' + PocketMarket.id);
+        res.redirect('/PocketMarket/' + pocketMarket.id);
       });
     });
 });
@@ -79,25 +77,25 @@ router.get("/new", middlewareObj.isLoggedIn, function(req, res) {
 });
 
 router.get("/:id", function(req, res) {
-    PocketMarket.findById(req.params.id).populate("comments").exec(function(err, foundPocketMarket) {
-        if (err || !foundPocketMarket) {
+    pocketMarket.findById(req.params.id).populate("comments").exec(function(err, foundpocketMarket) {
+        if (err || !foundpocketMarket) {
             req.flash("error","The pocket market doesn't exit.");
             res.redirect("/PocketMarket");
         }
         else {
-            res.render("PocketMarket/show", { pocketMarket : foundPocketMarket });
+            res.render("PocketMarket/show", { pocketMarket : foundpocketMarket });
         }
     });
 });
 
 router.get("/:id/edit", middlewareObj.checkAccountOwnership, function(req, res) {
-    PocketMarket.findById(req.params.id, function(err, foundPocketMarket ) {
-        if (err || !foundPocketMarket) {
+    pocketMarket.findById(req.params.id, function(err, foundpocketMarket ) {
+        if (err || !foundpocketMarket) {
              req.flash("error","You don't own this post");
              res.redirect("/PocketMarket");
         } 
         else {
-            res.render("PocketMarket/edit",  { pocketMarket: foundPocketMarket }); 
+            res.render("PocketMarket/edit",  { pocketMarket: foundpocketMarket }); 
         }
     });
 });
@@ -105,10 +103,10 @@ router.get("/:id/edit", middlewareObj.checkAccountOwnership, function(req, res) 
 router.put("/:id", middlewareObj.checkAccountOwnership, upload.single('image'), function(req, res) {
     if(req.file){
         cloudinary.uploader.upload(req.file.path, function(result) {
-          req.body.PocketMarket.image = result.secure_url;
-          req.body.PocketMarket.body = req.sanitize(req.body.PocketMarket.body);
-          PocketMarket.findByIdAndUpdate(req.params.id, req.body.PocketMarket, function(err, updatedPocketMarket) {
-                if (err || !updatedPocketMarket) {
+          req.body.pocketMarket.image = result.secure_url;
+          req.body.pocketMarket.body = req.sanitize(req.body.pocketMarket.body);
+          pocketMarket.findByIdAndUpdate(req.params.id, req.body.pocketMarket, function(err, updatedpocketMarket) {
+                if (err || !updatedpocketMarket) {
                     res.redirect("/PocketMarket");
                 }
                 else {
@@ -119,9 +117,9 @@ router.put("/:id", middlewareObj.checkAccountOwnership, upload.single('image'), 
         });
 
     } else {
-        req.body.PocketMarket.body = req.sanitize(req.body.PocketMarket.body);
-        PocketMarket.findByIdAndUpdate(req.params.id, req.body.PocketMarket, function(err, updatedPocketMarket) {
-            if (err || !updatedPocketMarket) {
+        req.body.pocketMarket.body = req.sanitize(req.body.pocketMarket.body);
+        pocketMarket.findByIdAndUpdate(req.params.id, req.body.pocketMarket, function(err, updatedpocketMarket) {
+            if (err || !updatedpocketMarket) {
                 res.redirect("/PocketMarket");
             }
             else {
@@ -134,7 +132,7 @@ router.put("/:id", middlewareObj.checkAccountOwnership, upload.single('image'), 
 });
 
 router.delete("/:id", middlewareObj.checkAccountOwnership, function(req, res) {
-    PocketMarket.findByIdAndRemove(req.params.id, function(err) {
+    pocketMarket.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             res.redirect("/PocketMarket");
 

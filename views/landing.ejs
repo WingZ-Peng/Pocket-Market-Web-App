@@ -4,15 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PocketMarket</title>
+    <title>Pocket Market</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<<<<<<< HEAD
     <link rel="stylesheet" href="../styles/landing.css">
+=======
+    <link rel="stylesheet" href="/stylesheets/landing.css">
+>>>>>>> 567b67f58d358eac1ad6080bc9c5e867061dd52f
 </head>
 <body>
+
+    <div class="container">
+        <% if(error && error.length > 0){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
+
     <div id="landing-header">
         <h1>Welcome to Pocket Market!</h1>
-        <a href="/PocketMarket" class="btn btn-lg btn-default">Get Started</a>
+        <hr class="page_hr">
+        <h4>Plan ahead, Buy the best</h4>
+        <a href="/PocketMarket" class="btn btn-default btn-lg bigger animated">Get Started</a>
     </div>    
+<<<<<<< HEAD
     <ul class="slideshow" >
         <li ></li>
 		<li ></li>
@@ -23,3 +44,15 @@
 </body>
 
 
+=======
+
+    <ul class="slideshow">
+        <li></li>
+		<li></li>
+		<li></li>
+        <li></li>
+		<li></li>
+    </ul>
+    
+<%- include ('partials/footer.ejs') %>
+>>>>>>> 567b67f58d358eac1ad6080bc9c5e867061dd52f
