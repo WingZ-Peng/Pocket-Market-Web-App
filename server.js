@@ -28,7 +28,7 @@ app.use(expressSanitizer());
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser('Pocket Market'));
+app.use(cookieParser('secret'));
 passport.use(new localPassport(UserInformation.authenticate()));
 passport.serializeUser(UserInformation.serializeUser());
 passport.deserializeUser(UserInformation.deserializeUser());
@@ -36,8 +36,8 @@ passport.deserializeUser(UserInformation.deserializeUser());
 //Passport configuration
 app.use(session({
     secret:"Pocket Market",
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }));
 
 app.use(function(req, res, next){
