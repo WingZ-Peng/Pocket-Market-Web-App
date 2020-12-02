@@ -4,7 +4,6 @@ const pocketMarketSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
-    createdAt: { type: Date, default: Date.now },
     author: {
        id: {
           type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +19,6 @@ const pocketMarketSchema = new mongoose.Schema({
     ] 
 });
 
-const PocketMarket = mongoose.model('PocketMarkrt', pocketMarketSchema);
+const pocketMarket = mongoose.model('pocketMarkrt', pocketMarketSchema);
 
-export default PocketMarket;
+export default pocketMarket;

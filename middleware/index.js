@@ -1,48 +1,59 @@
 import Comment from '../models/comment.js';
-import PocketMarket from '../models/pocketMarket.js';
+import pocketMarket from '../models/pocketMarket.js';
 
 const middlewareObj = {};
 
 middlewareObj.isLoggedIn = function (req, res, next) {
   if (req.isAuthenticated()) {  
-   return next();
-  }else{
-    req.flash("error","Please login first!");
-    res.redirect("/login");
-}};
+      return next();
+  } else{
+       req.flash("error","Please login!");
+       res.redirect("/login");
+ }}
 
 middlewareObj.checkAccountOwnership = function (req, res, next){
   if (req.isAuthenticated()) {
-    PocketMarket.findById(req.params.id, function(err, foundPocketMarket) {
-      if(err || !foundPocketMarket){
-          console.log(err);
+    pocketMarket.findById(req.params.id, function(err, foundpocketMarket) {
+      if(err || !foundpocketMarket){
           req.flash('error', 'Post do not exit!');
-          res.redirect('/pocketMarket');
-      } else if(foundPocketMarket.author.id.equals(req.user._id)){
-        req.pocketMarket = foundPocketMarket;
-        next();
+          res.redirect('/PocketMarket');
       } else {
+        if(foundpocketMarket.author.id.equals(req.user._id)){
+        next();
+        } else {
           req.flash('error', 'Permission denied!');
           res.redirect("Go back");
         }
-      });
-    }};
+      }})
+    }else{
+      req.flash("error","Please login");
+      res.redirect("back"); 
+    }
+  }
 
 middlewareObj.checkCommentOwnership = function (req, res, next){
   if (req.isAuthenticated()) {
-      Comment.findById(req.params.commentId, function(err, foundComment){
+      Comment.findById(req.params.comment_id, function(err, foundComment){
          if(err || !foundComment){
-             console.log(err);
              req.flash('error', 'Comment do not exist!');
-             res.redirect('/Go back');
-         } else if(foundComment.author.id.equals(req.user._id)){
-              req.comment = foundComment;
-              next();
+             res.redirect('/PocketMarket');
          } else {
-             req.flash('error', 'Permission denied!');
-             res.redirect("Go back");
-         }
-      });
-    }};
+           pocketMarket.findById(req.params.id, function(err, foundpocketMarket){
+             if (err || !foundpocketMarket){
+               req.flash("error", "Post do not exit!");
+               res.redirect("PocketMarket");
+             } else {
+               if(foundComment.author.id.equals(req.user._id)){
+               next();
+              } else {
+                req.flash('error', 'Permission denied!');
+                res.redirect("Go back");
+              }}})
+            }
+          })
+        }else {
+          req.flash("error","Please login");
+          res.redirect("back"); 
+        }}
 
 export default middlewareObj;

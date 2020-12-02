@@ -3,8 +3,8 @@
 <div class = "container">
     <header class="jumbotron">
         <div class="container">
-            <h1><i class ="fas fa-utensil"></i>Welcome to PocketMarket</h1>
-            <p>Let's share</p>
+            <h1><i class ="fas fa-utensil"></i>Welcome to Pocket Market</h1>
+            <p>Sharing is the fruit of dedication! Sharing is the premise of happiness!</p>
             <p>
                 <a class ="btn btn-primary btn-lg" href="/PocketMarket/new">Share</a>
             </p>
@@ -12,7 +12,7 @@
     </header>
 
     <div class="row" style="display:flex; flex-wrap: wrap">
-        <% pocketMarket.forEach(function(pocketMarket){ %>
+        <% PocketMarket.forEach(function(pocketMarket){ %>
             <div class= "col-lg-9 col-md-9 col-sm-9 col-centered">
                 <div class="thumbnail">
                     <img src="<%= pocketMarket.image %>" >
@@ -20,7 +20,7 @@
                         <h4><%= pocketMarket.name%></h4>
                     </div>
                     <p>
-                    <a href="/PocketMarket/<%= PocketMarket._id%>" class ="btn btn-primary">More Info</a>
+                    <a href="/PocketMarket/<%= pocketMarket._id%>" class ="btn btn-primary">More Info</a>
                     </p>
                 </div>
             </div>
