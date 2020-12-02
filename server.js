@@ -16,7 +16,7 @@ import User from './models/user.js';
 import userRouters from './routes/index.js';
 import commentRoutes from "./routes/comments.js";
 import pocketMarketRoutes from "./routes/pocketMarket.js";
-import.meta.url
+
 
 const app = express();
 dotenv.config();
@@ -29,19 +29,11 @@ app.use(expressSanitizer());
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-<<<<<<< HEAD
-app.use(cookieParser('Pocket Market'));
+app.use(cookieParser('serect'));
 app.use(express.static(process.cwd()+ "/public"));
-passport.use(new localPassport(UserInformation.authenticate()));
-passport.serializeUser(UserInformation.serializeUser());
-passport.deserializeUser(UserInformation.deserializeUser());
-=======
-app.use(cookieParser('secret'));
 passport.use(new localPassport(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
->>>>>>> 567b67f58d358eac1ad6080bc9c5e867061dd52f
-
 //Passport configuration
 app.use(session({
     secret:"Pocket Market",
