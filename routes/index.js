@@ -16,7 +16,7 @@ router.get("/register", function(req, res) {
  */
 
  //Sign up logic
-router.post('/register', function (req, res, next) {
+router.post("/register", function (req, res) {
 
     // console.log(req.body);
     var newUser = new User ({
@@ -50,7 +50,8 @@ router.get("/login", function(req, res){
 router.post("/login", passport.authenticate("local",{
     successRedirect: "/PocketMarket",
     failureRedirect: "/login",
-    successFlash: " Welcome "
+    successFlash: " Welcome ",
+    failureFlash: true
   }), 
   function(req, res) {});
 

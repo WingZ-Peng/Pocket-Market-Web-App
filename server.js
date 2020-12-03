@@ -6,12 +6,11 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import localPassport from 'passport-local';
 import flash from 'connect-flash';
+import moment from 'moment';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import expressSanitizer from 'express-sanitizer';
 import session from "express-session";
-import PocketMarket from './models/pocketMarket.js';
-import Comment from './models/comment.js';
 import User from './models/user.js';
 import userRouters from './routes/index.js';
 import commentRoutes from "./routes/comments.js";
@@ -34,6 +33,8 @@ app.use(express.static(process.cwd()+ "/public"));
 passport.use(new localPassport(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.locals.moment = moment;
+
 //Passport configuration
 app.use(session({
     secret:"Pocket Market",

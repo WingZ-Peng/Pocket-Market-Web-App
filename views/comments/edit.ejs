@@ -4,7 +4,6 @@
         <div col-lg-12 col-md-12 col-sm-12>
             <h1 style="text-align:center;">Edit Comment</h1>
             <div style="width:30%; margin:25px auto;"> 
-                <%/*double check*/%>
                 <form action="/PocketMarket/<%= pocketMarket._id %>/comments/<%=comment._id %>?_method=PUT" method="POST">
                     <div class="form-group">
                         <input class="form-control" type=text, name="comment[text]" value="<%=comment.text%>">
