@@ -6,20 +6,16 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import localPassport from 'passport-local';
 import flash from 'connect-flash';
-import moment from 'moment';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import expressSanitizer from 'express-sanitizer';
 import session from "express-session";
-<<<<<<< HEAD
 import p_market from './models/p_market.js';
 import Comment from './models/comment.js';
-=======
->>>>>>> dc91df450211922493cfdc161c06cede356f9d3d
 import User from './models/user.js';
 import indexRouters from './routes/index.js';
 import commentRoutes from "./routes/comments.js";
-import p_marketRoutes from "./routes/p_market.js";
+import p_marketRoutes from "./routes/p_markets.js";
 
 
 
@@ -40,10 +36,6 @@ app.use(express.static(process.cwd()+ "/public"));
 passport.use(new localPassport(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-<<<<<<< HEAD
-=======
-app.locals.moment = moment;
->>>>>>> dc91df450211922493cfdc161c06cede356f9d3d
 
 //Passport configuration
 app.use(session({
