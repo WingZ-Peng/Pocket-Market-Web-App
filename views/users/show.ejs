@@ -4,19 +4,19 @@
 	<div class="col-md-4">
 		<h1><%= user.firstName + " " + user.lastName %></h1>
 		<div class="thumbnail">
-				<div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+			<div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
 		</div>
 	</div>
 	<div class="col-md-8">
 		<h3><%= user.username %>'s posts:</h3>
 		<% var count = 0 %>
-		<% PocketMarket.forEach(function(pocketMarket) { %>
+		<% p_markets.forEach(function(p_market) { %>
 			<% count++ %>
 		<% }); 
 		%><% if(count != 0){ %>
 			<ul class="list-group">
-			<% PocketMarket.forEach(function(pocketMarket) { %>
-				<li class="list-group-item"><a href="/PocketMarket/<%= pocketMarket.id %>"><%= pocketMarket.name %></a></li>
+			<% p_markets.forEach(function(p_market) { %>
+				<li class="list-group-item"><a href="/p_markets/<%= p_market.id %>"><%= p_market.name %></a></li>
 			<% }); %>
 			</ul>
 		<% } else { %>

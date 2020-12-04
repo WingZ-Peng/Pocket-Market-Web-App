@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const pocketMarketSchema = new mongoose.Schema({
+const p_marketSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
@@ -19,6 +19,6 @@ const pocketMarketSchema = new mongoose.Schema({
     ] 
 });
 
-const pocketMarket = mongoose.model('pocketMarkrt', pocketMarketSchema);
+const p_market = mongoose.model('p_market', p_marketSchema);
 
-export default pocketMarket;
+export default p_market;
