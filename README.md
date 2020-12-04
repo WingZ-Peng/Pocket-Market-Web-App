@@ -6,7 +6,7 @@
 * The goal of Pocket Market is to build a community of sharing. When facing the choice of goods in life, Pocket Market provides customers with the sharing of their shopping experience and conveys the happiness of sharing. APP architecture is based on Node. js, Express is adopted as the development framework, Mongoose is database and NPM packages. Pocket Market allows users to have their own account, share their shopping experience and comment on others' share.
 
 ### FEATURES:
-- Account register
+- Account registration
 - Create/Edit/Delete Comment
 - Post Message
 - Search bar
