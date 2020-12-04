@@ -38,7 +38,7 @@ body {
     bottom: 0;
     width: 100%;
     height: 60px;
-    background-color: #4682b4;
+    background-color: #FFFFFF;
 }
   
 .footer .container {
@@ -46,8 +46,8 @@ body {
 }
   
 .jumbotron {
-      background-image: url("https://i.imgur.com/ERHBuXb.png"); 
+      background-image: url("https://i.imgur.com/Y3WdRBs.png"); 
       background-repeat: no-repeat;
       background-size: cover;
-      color: #556B2F;
+      color: #000000;
 }

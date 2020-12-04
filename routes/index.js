@@ -1,7 +1,7 @@
 import express from 'express';
 import User from '../models/user.js';
 import passport from 'passport';
-import pocketMarket from '../models/pocketMarket.js';
+import pocketMarket from '../models/p_market.js';
 
 const router = express.Router();
 
@@ -17,6 +17,7 @@ router.get("/register", function(req, res) {
 
  //Sign up logic
 router.post('/register', function (req, res, next) {
+    console.log("here!");
 
     // console.log(req.body);
     var newUser = new User ({
@@ -47,12 +48,14 @@ router.get("/login", function(req, res){
 });
 
 //login logic
-router.post("/login", passport.authenticate("local",{
-    successRedirect: "/PocketMarket",
-    failureRedirect: "/login",
-    successFlash: " Welcome "
-  }), 
-  function(req, res) {});
+router.post("/login", function(req, res, next){
+passport.authenticate("local",{
+  successRedirect: "/PocketMarket",
+  failureRedirect: "/login",
+  successFlash: " Welcome "
+  
+})(req,res);
+});
 
 // logout route
 router.get("/logout", function(req, res){

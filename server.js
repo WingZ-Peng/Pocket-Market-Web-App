@@ -10,12 +10,14 @@ import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import expressSanitizer from 'express-sanitizer';
 import session from "express-session";
-import PocketMarket from './models/pocketMarket.js';
+import p_market from './models/p_market.js';
 import Comment from './models/comment.js';
 import User from './models/user.js';
-import userRouters from './routes/index.js';
+import indexRouters from './routes/index.js';
 import commentRoutes from "./routes/comments.js";
-import pocketMarketRoutes from "./routes/pocketMarket.js";
+import p_marketRoutes from "./routes/p_market.js";
+
+
 
 
 const app = express();
@@ -34,6 +36,7 @@ app.use(express.static(process.cwd()+ "/public"));
 passport.use(new localPassport(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 //Passport configuration
 app.use(session({
     secret:"Pocket Market",
@@ -46,11 +49,12 @@ app.use(function(req, res, next){
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
+    
  });
 
-app.use("/", userRouters);
-app.use('/pocketMarket', pocketMarketRoutes); 
-app.use('/pocketMarket/:id/comments', commentRoutes);
+app.use("/", indexRouters);
+app.use("/p_markets", p_marketRoutes); 
+app.use("/p_market/:id/comments", commentRoutes);
 
 const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
