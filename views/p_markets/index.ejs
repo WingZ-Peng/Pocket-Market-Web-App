@@ -1,5 +1,6 @@
 <%- include ('../partials/header.ejs') %>
 
+<!---where is this function from ???-->
 <% if(currentUser){ %>
     <h1>Logged in</h1>
 <% } %>
@@ -10,21 +11,21 @@
             <h1><i class ="fas fa-utensil"></i>Welcome to Pocket Market</h1>
             <p>Sharing is the fruit of dedication! Sharing is the premise of happiness!</p>
             <p>
-                <a class ="btn btn-primary btn-lg" href="/PocketMarket/new">Share</a>
+                <a class ="btn btn-primary btn-lg" href="/p_markets/new">Share</a>
             </p>
         </div>
     </header>
 
     <div class="row" style="display:flex; flex-wrap: wrap">
-        <% PocketMarket.forEach(function(pocketMarket){ %>
+        <% p_markets.forEach(function(p_market){ %>
             <div class= "col-lg-9 col-md-9 col-sm-9 col-centered">
                 <div class="thumbnail">
-                    <img src="<%= pocketMarket.image %>" >
+                    <img src="<%= p_market.image %>" >
                     <div class="caption">
-                        <h4><%= pocketMarket.name%></h4>
+                        <h4><%= p_market.name%></h4>
                     </div>
                     <p>
-                    <a href="/PocketMarket/<%= pocketMarket._id%>" class ="btn btn-primary">More Info</a>
+                    <a href="/p_markets/<%= p_market._id%>" class ="btn btn-primary">More Info</a>
                     </p>
                 </div>
             </div>

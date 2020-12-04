@@ -4,24 +4,24 @@
         <div class="col-md-3 col-sm-12">
             <p class="lead">Pocket Market</p>
             <div class="list-group">
-                <li class="list-group-item" ><a href="/PocketMarket/new">Create new post</a></li>
-                <li class="list-group-item" ><a href="#commentSection">See comments</a></li>
-                <li class="list-group-item" ><a href="/PocketMarket">Go Back</a></li>
+                <li class="list-group-item" ><a href="/p_markets/new">Create new post</a></li>
+                <li class="list-group-item" ><a href="#commentSection">See comments</a></li> <!---????-->
+                <li class="list-group-item" ><a href="/p_markets">Go Back</a></li>
             </div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
-               <img class="img-responsive" src="<%= pocketMarket.image %>">
+               <img class="img-responsive" src="<%= p_market.image %>">
                <div class="caption-full">
-                   <h4 class="pull-right">$<%=pocketMarket.price%></h4>
-                   <h4><a><%= pocketMarket.name %></a></h4>
-                   <p><%= pocketMarket.description %></p>
+                   <h4 class="pull-right">$<%=p_market.price%></h4>
+                   <h4><a><%= p_market.name %></a></h4>
+                   <p><%= p_market.description %></p>
                    <p>
-                       <em>Submitted By <a href="/users/<%= pocketMarket.author.id %>"><%= pocketMarket.author.username %></a></em>
+                       <em>Submitted By <a href="/users/<%= p_market.author.id %>"><%= p_market.author.username %></a></em>
                    </p>
-                   <% if (currentUser && pocketMarket.author.id.equals(currentUser._id)){ %>
-                   <a class="btn btn-warning" href="/PocketMarket/<%= pocketMarket._id %>/edit"> Edit </a>
-                   <form class="delete-form" action="/PocketMarket/<%= pocketMarket._id %>?_method=DELETE" method="POST" >
+                   <% if (currentUser && p_market.author.id.equals(currentUser._id)){ %>
+                   <a class="btn btn-warning" href="/p_markets/<%= p_market._id %>/edit"> Edit </a>
+                   <form class="delete-form" action="/p_markets/<%= p_market._id %>?_method=DELETE" method="POST" > <!--why method = "post"-->
                        <button  class="btn btn-danger">Delete</button>
                    </form>
                    <% } %>
@@ -29,10 +29,10 @@
             </div>
             <div class="well">
                 <div class="text-right" id="commentSection">
-                       <a class="btn btn-success" href="/PocketMarket/<%= pocketMarket._id %>/comments/new"> Add New Comment </a>
+                       <a class="btn btn-success" href="/p_markets/<%= p_market._id %>/comments/new"> Add New Comment </a>
                 </div>
                 <hr>
-                <% pocketMarket.comments.forEach(function(comment){ %>
+                <% p_market.comments.forEach(function(comment){ %>
                 <div class="row">
                     <div class="col-md-12">
                         <strong><a href="/users/<%= comment.author.id %>"><%= comment.author.username %></a></strong>
@@ -41,9 +41,9 @@
                           <%= comment.text %>
                         </p>
                     <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
-                        <a class="btn btn-xs btn-warning" href="/PocketMarket/<%=pocketMarket._id%>/comments/<%=comment._id%>/edit">Edit 
+                        <a class="btn btn-xs btn-warning" href="/p_markets/<%=p_market._id%>/comments/<%=comment._id%>/edit">Edit 
                         </a>
-                        <form class="delete-form" action="/PocketMarket/<%=pocketMarket._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                        <form class="delete-form" action="/p_markets/<%=p_market._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
                           <input type="submit" class="btn btn-xs btn-danger" value="delete"> 
                         </form>
                     <% } %>
@@ -51,7 +51,7 @@
                 </div>
             <% })%>
             </div>
-            <a class="btn btn-xs btn-warning" href="/PocketMarket">Go Back</a>
+            <a class="btn btn-xs btn-warning" href="/p_markets">Go Back</a>
         </div>
     </div>
 </div>            
