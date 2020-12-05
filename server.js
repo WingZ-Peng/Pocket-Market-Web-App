@@ -13,7 +13,7 @@ import session from "express-session";
 import p_market from './models/p_market.js';
 import Comment from './models/comment.js';
 import User from './models/user.js';
-import indexRouters from './routes/index.js';
+import indexRoutes from './routes/index.js';
 import commentRoutes from "./routes/comments.js";
 import p_marketRoutes from "./routes/p_markets.js";
 
@@ -52,9 +52,9 @@ app.use(function(req, res, next){
     
  });
 
-app.use("/", indexRouters);
+app.use(indexRoutes);
 app.use("/p_markets", p_marketRoutes); 
-app.use("/p_market/:id/comments", commentRoutes);
+app.use("/p_markets/:id/comments", commentRoutes);
 
 const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })

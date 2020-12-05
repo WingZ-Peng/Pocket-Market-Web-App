@@ -5,7 +5,7 @@ import middleware from "../middleware/index.js";
 import multer from 'multer';
 import cloudinary from 'cloudinary';
 
-const { isLoggedIn, checkCommentOwnership} = middleware;
+const { isLoggedIn, checkAccountOwnership} = middleware;
 const router = express.Router();
 
 var storage = multer.diskStorage({
@@ -34,7 +34,7 @@ router.get("/", function(req, res){
            if(err){
               console.log(err);
            } else {
-              res.render("p_market/index", { p_markets: allp_market });
+              res.render("p_markets/index", { p_markets: allp_markets });
            }
         });
     } else {

@@ -4,7 +4,7 @@
         <div col-lg-12 col-md-12 col-sm-12>
             <h1 style="text-align:center;">Edit Comment</h1>
             <div style="width:30%; margin:25px auto;">
-                <form action="/p_markets/<%= p_market._id %>/comments/<%=comment._id %>?_method=PUT" method="POST"> <!--_method=put or post--->
+                <form action="/p_markets/<%= p_market_id %>/comments/<%=comment._id %>?_method=PUT" method="POST"> <!--_method=put or post--->
                     <div class="form-group">
                         <input class="form-control" type="text" name="comment[text]" value="<%=comment.text%>">
                     </div>
