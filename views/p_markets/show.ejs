@@ -5,15 +5,14 @@
             <p class="lead">Pocket Market</p>
             <div class="list-group">
                 <li class="list-group-item" ><a href="/p_markets/new">Create new post</a></li>
-                <li class="list-group-item" ><a href="#commentSection">See comments</a></li> <!---????-->
+                <li class="list-group-item" ><a href="#commentSection">See comments</a></li> 
                 <li class="list-group-item" ><a href="/p_markets">Go Back</a></li>
             </div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
                <img class="img-responsive" src="<%= p_market.image %>">
-               <div class="caption-full">
-                   <h4 class="pull-right">$<%=p_market.price%></h4>
+               <div class="caption-full">   
                    <h4><a><%= p_market.name %></a></h4>
                    <p><%= p_market.description %></p>
                    <p>
@@ -21,7 +20,7 @@
                    </p>
                    <% if (currentUser && p_market.author.id.equals(currentUser._id)){ %>
                    <a class="btn btn-warning" href="/p_markets/<%= p_market._id %>/edit"> Edit </a>
-                   <form class="delete-form" action="/p_markets/<%= p_market._id %>?_method=DELETE" method="POST" > <!--why method = "post"-->
+                   <form class="delete-form" action="/p_markets/<%= p_market._id %>?_method=DELETE" method="POST" >
                        <button  class="btn btn-danger">Delete</button>
                    </form>
                    <% } %>
