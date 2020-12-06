@@ -5,7 +5,7 @@ import middleware from "../middleware/index.js";
 import multer from 'multer';
 import cloudinary from 'cloudinary';
 
-const { isLoggedIn, checkCommentOwnership} = middleware;
+const { isLoggedIn, checkAccountOwnership} = middleware;
 const router = express.Router();
 
 var storage = multer.diskStorage({
@@ -50,8 +50,8 @@ router.get("/", function(req, res){
 
   cloudinary.config({ 
     cloud_name: 'pocket-market', 
-    api_key: process.env.apiKey, 
-    api_secret: process.env.apiSecret
+    api_key: '341353797737712', 
+    api_secret: 'c8cslKaoKwY8au0FhaE02SvLF3g'
   });
 
   router.post("/", isLoggedIn, upload.single('image'), function(req, res) {
