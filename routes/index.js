@@ -52,8 +52,7 @@ router.post("/login", passport.authenticate("local",{
     failureRedirect: "/login",
     successFlash: " Nice to see you back! ",
     failureFlash: true
-  }), 
-  function(req, res) {});
+  }));
 
 // logout route
 router.get("/logout", function(req, res){
@@ -76,7 +75,7 @@ router.get("/users/:id", function(req, res) {
              } else {
                  res.render("users/show", {user: foundUser, p_markets: founder});
              }
-         });
+         })
      }
   }); 
 });
