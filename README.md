@@ -22,6 +22,7 @@
 ### Run App:
 * npm install
 * npm start
+* open window at localhost:5000
 
 ### Dependencies and Devdependencies:
 
